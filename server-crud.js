@@ -27,13 +27,17 @@ app.post('/data', (req, res) => {
   const { name, value } = req.body;
   
   // 🔴 INI YANG AKAN DIUBAH UNTUK SIMULASI REGRESI 🔴
-if (!name) {  // <- validasi value DIHAPUS!
-  return res.status(400).json({ error: 'Name and value are required' });
+if (!name) {
+  return res.status(400).json({
+    error: 'Name is required'
+  });
 }
-  const newItem = { id: nextId++, name, value };
-  dataStore.push(newItem);
-  res.status(201).json(newItem);
-});
+
+if (value === undefined) {
+  return res.status(400).json({
+    error: 'Value is required'
+  });
+}
 
 // PUT /data/:id - Update data
 app.put('/data/:id', (req, res) => {
